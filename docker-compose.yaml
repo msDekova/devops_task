@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  web:
+    build : .
+    # Bind the docker container to the host to expose on port 8000
+    ports:
+      - "8000:80"
