@@ -33,4 +33,8 @@ jobs:
         run: |
           minikube service list
           minikube service web --url
-          curl $(minikube service web --url)
+          echo "WEB_URL=$(minikube service web --url)" >> $GITHUB_ENV
+      - name: curl
+        uses: wei/curl@master
+        with:
+          args: env.WEB_URL
