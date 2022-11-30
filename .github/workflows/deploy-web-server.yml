@@ -34,6 +34,3 @@ jobs:
           minikube service list
           minikube service web --url
           curl $(minikube service web --url)
-docker compose build
-      - name: Run tests
-        run: docker compose run web bash
