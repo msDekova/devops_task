@@ -1,0 +1,39 @@
+name: Build Web Server and Deploy to Minikube
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - docker-compose.yaml
+      - Dockerfile
+
+jobs:
+  build_and_deploy:
+    name: Build and deploy the web server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v2
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+      - name: Test if cluster is up
+        run: kubectl get pods -A
+      - name: Build docker image
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker compose build
+          echo -n "Check if the image are available"
+          docker image ls
+      - name: Deploy to minikube
+        run: kubectl apply -f deploy-web-to-minikube.yaml
+      - name: Get web service URL
+        run: |
+          minikube service list
+          minikube service web --url
+          curl $(minikube service web --url)
+docker compose build
+      - name: Run tests
+        run: docker compose run web bash
