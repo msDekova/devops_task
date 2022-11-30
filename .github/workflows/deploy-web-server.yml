@@ -33,9 +33,4 @@ jobs:
         run: |
           minikube service list
           minikube service web --url
-          export WEB_URL=$(minikube service web --url) 
-          echo "::set-env name=WEB_URL::$WEB_URL"
-      - name: curl
-        uses: wei/curl@master
-        with:
-          args: $WEB_URL
+          curl $(minikube service web --url)
