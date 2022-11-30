@@ -1,13 +1,8 @@
 name: Build Web Server and Deploy to Minikube
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - 'src/**'
-      - docker-compose.yaml
-      - Dockerfile
 
 jobs:
   build_and_deploy:
@@ -20,6 +15,11 @@ jobs:
         uses: medyagh/setup-minikube@master
       - name: Test if cluster is up
         run: kubectl get pods -A
+      - name: Deploy db to minikube
+        run: |
+          kubectl apply -f deployment-db.yaml
+          kubectl get pods
+          kubectl get services
       - name: Build docker image
         run: |
           export SHELL=/bin/bash
@@ -28,10 +28,9 @@ jobs:
           echo -n "Check if the image are available"
           docker image ls
       - name: Deploy to minikube
-        run: kubectl apply -f deploy-web-to-minikube.yaml
+        run: kubectl apply -f deployment-web-server.yaml
       - name: Get web service URL
         run: |
-          kubectl get services
           minikube service list
           minikube service web --url
           curl $(minikube service web --url)
