@@ -3,7 +3,8 @@ FROM php:7.0-apache
 WORKDIR /var/www/html
 
 RUN apt update && apt -y upgrade \
-  && apt -y install vim php7.0-mysql
+  && apt -y install vim
+RUN docker-php-ext-install mysqli
 
 COPY ./src/ . 
 
