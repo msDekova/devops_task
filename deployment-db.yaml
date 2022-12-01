@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-depl 
+  labels:
+    app: mysql8
 spec:
   selector:
      matchLabels:
