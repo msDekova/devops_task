@@ -15,6 +15,11 @@ jobs:
         uses: medyagh/setup-minikube@master
       - name: Test if cluster is up
         run: kubectl get pods -A
+      - name: Create secret configuration file
+        run: |
+          kubectl apply -f secret.yaml
+          echo "Verify that secret is created"
+          kubectl get secret
       - name: Deploy db to minikube
         run: |
           kubectl apply -f deployment-db.yaml
@@ -33,4 +38,5 @@ jobs:
         run: |
           minikube service list
           minikube service web --url
+          minikube status
           curl $(minikube service web --url)
