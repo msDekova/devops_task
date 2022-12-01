@@ -1,6 +1,13 @@
 <?php
   // Create connection
-  $con= new mysqli('mysql:host=mysql8-service;port=3306;dbname=db_name', 'root', 'password')or die("Could not connect to mysql".mysqli_error($con));
+  try {
+    $conn = new PDO('mysql:host=mysql8-service;port=3306;dbname=db_name', 'root', 'password');
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+  } catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+  }
 ?>
 
 <html>
