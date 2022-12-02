@@ -4,9 +4,11 @@ WORKDIR /var/www/html
 
 RUN apt update && apt -y upgrade \
   && apt -y install vim
-RUN docker-php-ext-install mysqli
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
-COPY ./src/ . 
+COPY ./src/index.php . 
 
 #Expose port 80 on the docker container
 EXPOSE 80
