@@ -42,6 +42,8 @@ jobs:
         run: kubectl get all
       - name: Get web service URL
         run: |
+          POD=$(kubectl get pod -l app=web -o jsonpath="{.items[0].metadata.name}")
+          kubectl exec -ti $POD -- ls /
           minikube service list
           minikube service web-service --url
           minikube status
