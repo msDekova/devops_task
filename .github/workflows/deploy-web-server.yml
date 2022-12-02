@@ -40,13 +40,10 @@ jobs:
           time: '30s'
       - name: Check availability of the created pods and services
         run: kubectl get all
-      - name: Connect to Postgres DB
-        run:
-          POD=$(kubectl get pod -l app=web -o jsonpath="{.items[0].metadata.name}")
-          echo "$POD"
-          kubectl exec -ti $POD -- ls /
       - name: Get web service URL
         run: |
+          POD=$(kubectl get pod -l app=web -o jsonpath="{.items[0].metadata.name}")
+          kubectl exec -ti $POD -- ls /
           minikube service list
           minikube service web-service --url
           minikube status
