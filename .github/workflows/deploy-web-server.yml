@@ -43,6 +43,6 @@ jobs:
       - name: Get web service URL
         run: |
           minikube service list
-          minikube service web --url
+          minikube service web-service --url
           minikube status
-          curl $(minikube service web --url)
+          curl $(minikube service web-service --url)
