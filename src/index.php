@@ -1,5 +1,6 @@
 <?php
-  $con= new mysqli('mysql8-service', 'root', 'password')or die("Could not connect to mysql".mysqli_error($con));
+  pg_connect("host=mysql8-service password=cGFzc3dvcmQK");
+  pg_query("create table test(id integer)");
 ?>
 
 <html>
