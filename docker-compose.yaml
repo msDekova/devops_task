@@ -1,8 +1,17 @@
 version: '3'
 
 services:
+  mysql:
+    build : ./mysqlserver
+    container_name: mysqlserver
+    environment:
+      - MYSQL_DATABASE="db_name"
+      - MYSQL_ROOT_PASSWORD="password"
+    ports:
+      - "3306:3306"
   web:
-    build : .
+    build : ./webserver
+    container_name: webserver
     # Bind the docker container to the host to expose on port 8000
     ports:
       - "8000:80"
