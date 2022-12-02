@@ -16,9 +16,20 @@ spec:
         app: mysql8
     spec:
       containers:
-        - name: mysql-container
-          image: devops_task-mysql
-          imagePullPolicy: Never
+        - name: mysql
+          image: mysql:8.0
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: db_name
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
           ports:
             - containerPort: 3306
 ---
