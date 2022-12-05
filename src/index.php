@@ -1,5 +1,5 @@
 <?php
-  pg_connect("host=mysql8-service password=cGFzc3dvcmQK");
+  pg_connect("host=mysql8-service:5432 port=5432 password=cGFzc3dvcmQK");
   pg_query("create table test(id integer)");
 ?>
 
